@@ -6,11 +6,12 @@ import (
 	"os"
 	"strings"
 	"sync"
+	"time"
 )
 
 func urlCheck(url string, wg *sync.WaitGroup) {
 	defer wg.Done()
-	var _, err = http.Get(url)
+	var _, err = http.Head(url)
 	if err != nil {
 		fmt.Println("[FAIL]", url)
 	} else {
@@ -18,6 +19,7 @@ func urlCheck(url string, wg *sync.WaitGroup) {
 	}
 }
 func main() {
+	var start = time.Now()
 	var wg sync.WaitGroup
 
 	fmt.Println("#### URL TEST ####")
@@ -35,4 +37,5 @@ func main() {
 		go urlCheck(line, &wg)
 	}
 	wg.Wait()
+	fmt.Printf("Elapsed Time - %v", time.Since(start).String())
 }
