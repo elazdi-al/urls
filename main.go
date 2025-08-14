@@ -3,14 +3,21 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
 	fmt.Println("#### URL TEST ####")
-	var file, err = os.ReadFile("urls.txt")
+
+	var file []byte
+	var err error
+	file, err = os.ReadFile("urls.txt")
+
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(string(file))
-
+	var lines = strings.Split(string(file), "\n")
+	for _, line := range lines {
+		fmt.Println(line)
+	}
 }
